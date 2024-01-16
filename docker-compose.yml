@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+
+  timpi:
+    build: ./container
+    container_name: timpi
+    image: timpi
+
+  collector:
+    image: timpi:latest
+    container_name: collector
+    hostname: collector
+    restart: always
+
+    volumes:
+      - ./src:/root/timpi
+    entrypoint: ["/root/timpi/TimpiCollector"]
+
+  collector-ui:
+    image: timpi:latest
+    container_name: collector-ui
+    hostname: collector-ui
+    restart: always
+
+    ports:
+      - "5015:5015"
+
+    volumes:
+      - ./src:/root/timpi
+    entrypoint: ["/root/timpi/TimpiUI"]
