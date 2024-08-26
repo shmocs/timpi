@@ -29,3 +29,19 @@ services:
     volumes:
       - ./src:/root/timpi
     entrypoint: ["/root/timpi/TimpiUI"]
+
+  guardian:
+    image: timpiltd/timpi-guardian
+    container_name: guardian
+    hostname: guardian
+    restart: always
+    ports:
+      - "8983:8983"
+      - "4005:4005"
+    volumes:
+      - ./data/guardian:/var/solr
+    environment:
+      - SOLR_PORT=8983
+      - GUARDIAN_PORT=4005
+      - SOLR_HOST=$SOLR_HOST
+      - GUID=$GUID
